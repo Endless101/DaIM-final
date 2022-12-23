@@ -46,7 +46,7 @@ return n, count(distinct c);
 
 // H1
 
-match(n:author)-->(ar {year: "'2020'"})-->(c:conference {name: " 'ICDT' "})
+match(n:author)-->(ar {year: "'2020'"})-->(c:conference {name: "' ICDT '"})
 match(n)-->(ar2)
 match(co:author)-->(ar2)
 	where not n = co
