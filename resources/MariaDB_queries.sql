@@ -88,3 +88,30 @@ on maxAuthorAndKeyTable.publication_key = conference.proceedings_key;
 -- Result:
 -- The researcher with the most overall = Jos
 -- Number of conferences they published to = 4060
+
+-- H1 query
+CREATE TABLE new_authors
+SELECT *
+FROM
+--Table that contains all the authors and their co-authors
+(SELECT a3.author as author, a3.publication_key as author_key
+FROM author a3
+WHERE a3.publication_key = ANY
+--Table that contains all the conference and journal keys that could hold co-authors
+(SELECT a2.publication_key
+FROM author a2
+WHERE a2.author = ANY
+--Table that contains all those specific authors
+(SELECT DISTINCT a.author
+FROM conference c
+INNER JOIN author a ON c.proceedings_key = a.publication_key
+INNER JOIN inproceeding i ON c.proceedings_key = i.inproceeding_key
+WHERE c.title = "' ICDT '" AND i.`year` = "'2020'")))
+
+--We define a second query as we need the above table to computer the inner product
+SELECT t1.author, t1.coauthor, MAX(t1.timesWorkedTogether)
+    (SELECT n1.author AS author, n2.author AS coauthor, COUNT(n1.author_key) AS timesWorkedTogether
+    FROM new_authors n1, new_authors n2
+    WHERE n1.author_key = n2.author_key) t1
+    GROUP BY t1.author, t1.coauthor
+--We did not at the result for this query as it took too long to run
