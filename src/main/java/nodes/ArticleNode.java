@@ -2,10 +2,9 @@ package nodes;
 
 import data_io.Writer;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+// Node for Articles
 public class ArticleNode extends AbstractNode {
 
     public static Map<String, String> articleMap() {

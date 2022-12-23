@@ -42,7 +42,7 @@ public class Writer {
 
     }
 
-
+    // Create and write the csv headers
     public static void writeHeader(String[] header, String filename) {
         File file = new File(filename);
         if (file.exists()) {
@@ -61,7 +61,7 @@ public class Writer {
 
         }
     }
-
+    // Write content from a node to csv
     public static void writeContent(AbstractNode node, String filename) {
         File file = new File(filename);
         if (file.exists()) {

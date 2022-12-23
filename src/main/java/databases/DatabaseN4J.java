@@ -5,8 +5,7 @@ import org.neo4j.driver.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class DatabaseN4J {
 
@@ -23,12 +22,22 @@ public class DatabaseN4J {
         session = driver.session();
     }
 
+    /**
+     * Reads queries from a file and put them in an Array
+     * @param queriesPath the file path to the queries
+     * @return array of queries in string
+     * @throws IOException
+     */
     public static String[] readQueries(String queriesPath) throws IOException {
         File queriesFile = new File(queriesPath);
         byte[] fileBytes = Files.readAllBytes(queriesFile.toPath());
         return (new String(fileBytes)).split(";");
     }
 
+
+    /**
+     * Executes the queries in Neo4j
+     */
     public void executeQueries() {
         try {
             String[] queries = readQueries(queriesPath);
@@ -41,7 +50,7 @@ public class DatabaseN4J {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main() {
         DatabaseN4J db = new DatabaseN4J();
         db.executeQueries();
         db.driver.close();

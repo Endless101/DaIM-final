@@ -4,6 +4,7 @@ import data_io.Writer;
 
 import java.util.Map;
 
+// Node for Inproceedings
 public class InproceedingsNode extends AbstractNode {
     public static Map<String, String> inproceedingsMap() {
 

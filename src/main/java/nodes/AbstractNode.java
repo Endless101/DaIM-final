@@ -2,9 +2,13 @@ package nodes;
 
 import java.util.Map;
 
-
+/**
+ * Super class of all possible nodes.
+ * Note the terminology "node" is used since the code started as a parser for Neo4j
+ */
 public class AbstractNode {
     String type;
+    // Contents of a node. A mapping between their dblp element and their value.
     Map<String, String> contents;
 
     public String getType() {
