@@ -43,3 +43,25 @@ where pub:article or pub:inproceeding
 with n,count(r) as publications order by publications desc limit 1
 match(n:author)--()-[rs]->(c:conference)
 return n, count(distinct c);
+
+// H1
+
+match(n:author)-->(ar {year: "'2020'"})-->(c:conference {name: " 'ICDT' "})
+match(n)-->(ar2)
+match(co:author)-->(ar2)
+	where not n = co
+with n,collect(co) as coAuthor
+call {
+with n, coAuthor
+unwind coAuthor as cas
+with n,cas,count(cas) as ccas
+with n, max(ccas) as maxes
+return n as someNode,maxes as maxes
+}
+call{
+with n,coAuthor, maxes
+unwind coAuthor as cas
+with maxes,n,cas,count(cas) as ccas
+	where ccas=maxes
+return n as finalAuthor, ccas as countCoAuthors, cas as coAuthors
+} return finalAuthor,countCoAuthors,coAuthors;
